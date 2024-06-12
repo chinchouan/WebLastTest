@@ -724,7 +724,7 @@ def admin_edit_product():
 
 @app.route("/admin/add/product", methods=["GET", "POST"])
 def admin_add_product():
-    """管理者增加商品選項"""
+    """管理者增加商品選項頁面"""
     if "admin" not in session:
         return redirect(url_for("admin_login"))
     else:
