@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歷史訂單紀錄</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>歷史訂單紀錄</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>訂單編號</th>
+                <th>出貨時間</th>
+                <th>客戶名稱</th>
+                <th>產品名稱</th>
+                <th>數量</th>
+                <th>價格</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order['id'] }}</td>
+                <td>{{ order['time'] }}</td>
+                <td>{{ order['cid'] }}</td>
+                <td>{{ order['pid'] }}</td>
+                <td>{{ order['quantity'] }}</td>
+                <td>{{ order['price'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('index') }}">回首頁</a>
+</body>
+</html>

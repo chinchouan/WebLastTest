@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員資料</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 50%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>會員資料檢視</h1>
+    <table>
+        <tr>
+            <th>項目</th>
+            <th>資訊</th>
+        </tr>
+        <tr>
+            <td>姓名</td>
+            <td>{{ user['name'] }}</td>
+        </tr>
+        <tr>
+            <td>email</td>
+            <td>{{ user['email'] }}</td>
+        </tr>
+        <tr>
+            <td>手機</td>
+            <td>{{ user['phone'] }}</td>
+        </tr>
+        <tr>
+            <td>性別</td>
+            <td>{{ user['sex'] }}</td>
+        </tr>
+        <tr>
+            <td>生日</td>
+            <td>{{ user['birth'] }}</td>
+        </tr>
+        <tr>
+            <td>住址</td>
+            <td>{{ user['address'] }}</td>
+        </tr>
+    </table>
+    <a href="{{ url_for('edit') }}">修改個人資料</a>
+    <a href="{{ url_for('orders') }}">查看訂單</a>
+    <a href="{{ url_for('orders_history') }}">歷史訂單</a>
+    <a href="{{ url_for('index') }}">回首頁</a>
+    <a href="{{ url_for('logout') }}">登出</a>
+</body>
+</html>

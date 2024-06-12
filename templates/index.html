@@ -1,0 +1,256 @@
+<!--
+  https://mb.github.net.cn/mb/2910.html 
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Go Gadgets</title>
+<link href="static/styles/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="static/js/jquery-1.7.js"></script>
+<script type="text/javascript" src="static/js/jcarousellite_1.0.1.min.js"></script>
+<script type="text/javascript">
+
+$(function() {
+    $(".gallery").jCarouselLite({
+        btnNext: ".next",
+        btnPrev: ".prev",
+    });
+});
+</script>
+<!--[if lt IE 7]>
+<style type="text/css">
+.home .row{
+	padding-bottom:0;
+}
+.px_fix{
+	left:1px;
+	bottom:-3px;
+}
+</style>
+<![endif]-->
+ 
+</head>
+<body>
+<div id="main">
+  <div id="in" class="home">
+    <div id="header">
+    
+    <a href="{{ url_for('index') }}"><img src="static/images/logo.png" alt="Go Gadgets" /></a>
+      <div id="navigation">
+        {% if logged_in %}
+        <ul>
+          <li><a href="{{ url_for('index') }}" class="active" id="bar1">首頁</a></li>
+          <li><a href="{{ url_for('logout') }}" id="bar2">登出</a></li>
+          <li><a href="{{ url_for('customer') }}" id="bar3">檢視會員資料</a></li>
+        </ul>          
+        {% else %}
+        <ul>
+          <li><a href="{{ url_for('index') }}" class="active" id="bar1">首頁</a></li>
+          <li><a href="{{ url_for('register') }}" id="bar2">註冊</a></li>
+          <li><a href="{{ url_for('login') }}" id="bar3">登入</a></li>
+          <li><a href="{{ url_for('admin_login') }}">管理員</a></li>
+        </ul>
+        {% endif %}
+       </div>
+      <!--navigation-->
+    </div>
+    <!--header-->
+    <div id="body">
+      <div id="banner" class="cbox">
+      
+        <div id = "b_img"> <img src="static/images/IMG2024051021350.jpg" alt="商品圖片"  width="600" height="200"/><br />
+          
+          <!--but-->
+        </div>
+        <!--b_lft-->
+        <div> 
+          <h1>水下水質感測器</h1>
+          <h2>輕量化、可擴充</h2>
+          <h3>手持或是透過指令使其下潛偵測水質，作為分析、研究之用</h3><br>
+        </div>
+        <!--b_rgt-->
+      </div>
+      <!--banner-->
+
+<div class="clr"></div>
+      <style>
+        .modal{
+          display: none;
+          position: fixed;
+          z-index: 9999;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0,0,0,0.8);
+        }
+        .modal-image{
+          display: block;
+          max-width: 90%;
+          max-height: 90%;
+          margin: auto;
+          margin-top: 5%;
+        }
+      </style>
+      <script>
+        function showImage(image) {
+          var modal = document.getElementById("modal");
+          var modalimage = document.getElementById("modal-image");
+          var arr1 = document.getElementById("prev");
+          var arr2 = document.getElementById("next");
+          var bar1 = document.getElementById("bar1");
+          var bar2 = document.getElementById("bar2");
+          var bar3 = document.getElementById("bar3");
+
+          modal.style.display = "block";
+          modalimage.src = image.src; 
+          arr1.style.display = "none";
+          arr2.style.display = "none";
+          bar1.style.display = "none";
+          bar2.style.display = "none";
+          bar3.style.display = "none";
+        }
+        function hideImage() {
+          var modal = document.getElementById("modal");
+          var arr1 = document.getElementById("prev");
+          var arr2 = document.getElementById("next");
+          var bar1 = document.getElementById("bar1");
+          var bar2 = document.getElementById("bar2");
+          var bar3 = document.getElementById("bar3");
+
+          modal.style.display = "none";
+          arr1.style.display = "block";
+          arr2.style.display = "block";
+          bar1.style.display = "block";
+          bar2.style.display = "block";
+          bar3.style.display = "block";
+        }
+      </script>
+      <!--slider start-->
+    <div class="clr"></div>
+    <div class="inner_copyright">Collect from <a href="https://www.webmoban.net" target="_blank" title="网站模板">网站模板</a></div>
+		<div id="slider">
+                <div class="gallery">
+                        <ul>
+                            <li style="width: 150px;"><img style="display : block; border : #d3d3d3 solid 1px; background : #fff;" src="static/images/sensor_system.jpeg" height="200" onclick="showImage(this)"/></li>
+                            <li style="width: 150px;"><img style="display : block; border : #d3d3d3 solid 1px; background : #fff;" src="static/images/IMG20240510213155.jpg" height="200" onclick="showImage(this)"></li>
+                            <li style="width: 150px;"><img style="display : block; border : #d3d3d3 solid 1px; background : #fff;" src="static/images/IMG20240510213303.jpg" height="200" onclick="showImage(this)"/></li>
+                            <li style="width: 150px;"><img style="display : block; border : #d3d3d3 solid 1px; background : #fff;" src="static/images/IMG20240510213431.jpg"  height="200" onclick="showImage(this)"/></li>
+                            <li style="width: 150px;"><img style="display : block; border : #d3d3d3 solid 1px; background : #fff;" src="static/images/mach.jpg" height="200" onclick="showImage(this)"/></li> 
+                            <li style="width: 150px;"><img style="display : block; border : #d3d3d3 solid 1px; background : #fff;" src="static/images/motor.jpg" height="200" onclick="showImage(this)"/></li> 
+                       </ul>
+                       <div id = "modal" class="modal" onclick="hideImage()">
+                          <img id="modal-image" class="modal-image">
+                       </div>
+                </div>
+                
+               <a id="prev" class="prev"><img src="static/images/arrow-prev1.png" width="56" height="56" alt="Arrow Prev" /></a><!-- Next arrow -->
+               <a id="next" class="next"><img src="static/images/arrow-next1.png" width="56" height="56" alt="Arrow Next" /></a><!-- Previous arrow -->
+        </div>
+      <!--slider ends-->
+      <div class="clr"></div>   
+      <div class="clr"></div>   
+
+      <form action="{{ url_for('buy') }}" method="POST">
+        {% for rec in range(1, len+1) %}
+            {% if (rec-1)%2==0 %}
+              {% if (rec-1)!=0 %} 
+              </div>
+                </div>
+              {% endif %}
+            <div class="col-md-24">
+              <div class="row">
+            {% endif %}
+            <div class="col-6 text-center">
+              <div class="card">
+                <img class="card-img-top p-3" alt="商品圖片" src="static/images/sensor_system.jpeg">
+                <div class="card-body">
+                  <h5 class="card-title">方案{{product[(rec-1)][0]}}</h5>
+                  <h3 class="card-text">{{product[(rec-1)][1]}}</h3>
+                  <div class="clr"></div>
+                  <label style="font-size : 20px; color: #09f; float: left;">{{product[(rec-1)][2]}}<label>  
+                  <input required="required" style="zoom: 180%; margin-left: 80px; " id="id" name="id" type="radio" value="{{ rec }}" data-price="{{ product[(rec-1)][2] }}">
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <label style="font-size : 24px; color : #09f;">訂購數量</label>
+      <button type="button" id="decrease">-</button>
+      <input readonly="readonly" type="text" value="1" id="quantity" name="quantity">
+      <button type="button" id="increase">+</button>
+      <h3>總價格: </h3>
+      <input style="width: 75px;" name="totalprice" id="totalprice" type="text" readonly="readonly" value="0"/>
+      {% if logged_in %}
+        <input class="bbut" type="submit" name="submit" value="送出訂單"/>
+      {% else %}
+        <input class="bbut" value="請先登入"/>
+      {% endif %}
+        <style>
+        input[type="text"]{
+          padding: 5px;
+          width: 30px;
+        }
+        button{
+          padding: 5px 10px;
+          margin-left: 5px;
+        }
+      </style>
+      <script>
+        var quantity = document.getElementById("quantity");
+        var increase = document.getElementById("increase");
+        var decrease = document.getElementById("decrease");
+        var price = document.getElementById("price");
+        var totalprice = document.getElementById("totalprice");
+        var radios = document.querySelectorAll('input[name="id"]');
+        var selectedPrice;
+
+        
+        increase.addEventListener("click",function(){
+          if(selectedPrice!=undefined) {
+            var quantityValue = parseInt(quantity.value);
+            quantity.value = quantityValue + 1;
+            totalprice.value = quantity.value * selectedPrice;
+          }
+          else {
+            alert("請先選擇欲購買的方案");
+          }
+        });
+        decrease.addEventListener("click",function(){
+          if(selectedPrice!=undefined) {
+            var quantityValue = parseInt(quantity.value);
+            if(quantityValue > 1) {
+              quantity.value = quantityValue - 1;
+            }
+            totalprice.value = quantity.value * selectedPrice;
+          }
+          else {
+            alert("請先選擇欲購買的方案");
+          }
+        });
+
+        radios.forEach(function(radio) {
+          radio.addEventListener('change', function() {
+              selectedPrice = radio.getAttribute('data-price');
+              totalprice.value = selectedPrice;
+          });
+
+      });
+
+      // 初始化選中的價格
+      var checkedRadio = document.querySelector('input[name="id"]:checked');
+      if (checkedRadio) {
+          selectedPrice.value = checkedRadio.getAttribute('data-price');
+          totalprice.value = selectedPrice;
+      }
+      </script>
+    </form>
+  </div>
+  <!--in-->
+</div>
+<!--main-->
+</body>
+</html>
