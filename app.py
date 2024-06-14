@@ -608,7 +608,12 @@ def admin_orders():
     else:
         if request.method == "GET":
             orders = get_table("orders")
-            return render_template("admin_orders.html", orders=orders, index=len(orders))
+            orders_index = []
+            for i in orders:
+                orders_index.append(i[0])
+            return render_template(
+                "admin_orders.html", orders=orders, index=len(orders), oindex=orders_index
+            )
         if request.method == "POST":
             oid = request.form.get("oid")
             session["admin_oid"] = oid

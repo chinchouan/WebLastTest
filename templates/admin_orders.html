@@ -97,7 +97,7 @@
     <p>選擇欲編輯之訂單編號:</p>
     <form method="post" action="{{url_for('admin_orders')}}">
         <select name="oid">
-            {% for i in range(1, index + 1) %}
+            {% for i in oindex %}
             <option value="{{ i }}">編號{{ i }}</option>
             {% endfor %}
         </select>
