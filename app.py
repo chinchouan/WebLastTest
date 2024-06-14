@@ -1,15 +1,7 @@
 import os
 import sqlite3
 
-from flask import (
-    Flask,
-    flash,
-    redirect,
-    render_template,
-    request,
-    session,
-    url_for,
-)
+from flask import Flask, redirect, render_template, request, session, url_for
 
 app = Flask(__name__)
 app.secret_key = "123456789"
@@ -130,7 +122,8 @@ def update_customer(id, name, pwd, email, phone, sex, birth, address) -> None:
     """更新customer"""
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
-    sql = "Update customer set name=?, password=?, email=?, phone=?, sex=?, birth=?, address=? where id = ?"
+    sql = "Update customer set name=?, password=?, email=?, phone=?,"
+    sql = sql + " sex=?, birth=?, address=? where id = ?"
     values = (name, pwd, email, phone, sex, birth, address, id)
     cursor.execute(sql, values)
     result = cursor.fetchone()
@@ -211,7 +204,7 @@ def add_product(describe, price) -> None:
     cursor.execute(sql)
     result = cursor.fetchall()
     id = result[len(result) - 1][0] + 1
-    sql = "Insert into product (id, describe, price) values(?,?,?)"
+    sql = "Insert into product (id, description, price) values(?,?,?)"
     values = (id, describe, price)
     cursor.execute(sql, values)
     conn.commit()
@@ -232,7 +225,7 @@ def get_admins(aid) -> list:
 
 
 def update_admins(id, username, pwd) -> None:
-    """更新管理者"""
+    """更新管理員"""
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
     sql = "Select username from administrator"
@@ -251,7 +244,7 @@ def update_admins(id, username, pwd) -> None:
 
 
 def add_admins(username, pwd) -> str:
-    """更新管理者"""
+    """更新管理員"""
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
     sql = "Select username from administrator"
@@ -282,13 +275,9 @@ def index():
     data = cursor.fetchall()
 
     if request.method == "GET":
-        return render_template(
-            "index.html", logged_in=logged_in, product=data, len=len(data)
-        )
+        return render_template("index.html", logged_in=logged_in, product=data, len=len(data))
 
-    return render_template(
-        "index.html", logged_in=logged_in, product=data, len=len(data)
-    )
+    return render_template("index.html", logged_in=logged_in, product=data, len=len(data))
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -336,9 +325,7 @@ def customer():
         conn = sqlite3.connect(db)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
-        cursor.execute(
-            "SELECT * FROM customer WHERE name = ?", (session["u"],)
-        )
+        cursor.execute("SELECT * FROM customer WHERE name = ?", (session["u"],))
         user = cursor.fetchone()
         return render_template("customer.html", user=user)
     except Exception as e:
@@ -429,9 +416,7 @@ def edit():
             conn.commit()
 
             return redirect(url_for("customer"))
-        cursor.execute(
-            "SELECT * FROM customer WHERE name = ?", (session["u"],)
-        )
+        cursor.execute("SELECT * FROM customer WHERE name = ?", (session["u"],))
         user = cursor.fetchone()
         return render_template("edit.html", user=user)
     except Exception as e:
@@ -525,9 +510,7 @@ def orders_history():
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
-        cursor.execute(
-            "SELECT * FROM orders_history WHERE cid = ?", (session["u"],)
-        )
+        cursor.execute("SELECT * FROM orders_history WHERE cid = ?", (session["u"],))
 
         orders = cursor.fetchall()
 
@@ -544,7 +527,7 @@ def orders_history():
 
 @app.route("/admin/login", methods=["GET", "POST"])
 def admin_login():
-    """處理管理者登入事項"""
+    """管理員登入"""
     if request.method == "GET":
         return render_template("admin_login.html")
     elif request.method == "POST":
@@ -563,7 +546,7 @@ def admin_login():
 
 @app.route("/admin/manage")
 def admin_manage():
-    """顯示管理頁面"""
+    """管理員主頁"""
     if "admin" not in session:
         return redirect(url_for("admin_login"))
     else:
@@ -572,15 +555,13 @@ def admin_manage():
 
 @app.route("/admin/customers", methods=["GET", "POST"])
 def admin_customer():
-    """顯示管理customer頁面"""
+    """客戶管理"""
     if "admin" not in session:
         return redirect(url_for("admin_login"))
     else:
         if request.method == "GET":
             customer = get_table("customer")
-            return render_template(
-                "admin_customer.html", customer=customer, index=len(customer)
-            )
+            return render_template("admin_customer.html", customer=customer, index=len(customer))
         if request.method == "POST":
             cid = request.form.get("cid")
             session["admin_cid"] = cid
@@ -589,7 +570,7 @@ def admin_customer():
 
 @app.route("/admin/edit/customers", methods=["GET", "POST"])
 def admin_edit_customer():
-    """顯示編輯customer頁面"""
+    """編輯客戶頁面"""
     cid = session["admin_cid"]
     if "admin" not in session:
         return redirect(url_for("admin_login"))
@@ -621,15 +602,13 @@ def admin_edit_customer():
 
 @app.route("/admin/orders", methods=["GET", "POST"])
 def admin_orders():
-    """顯示訂單資訊"""
+    """訂單管理"""
     if "admin" not in session:
         return redirect(url_for("admin_login"))
     else:
         if request.method == "GET":
             orders = get_table("orders")
-            return render_template(
-                "admin_orders.html", orders=orders, index=len(orders)
-            )
+            return render_template("admin_orders.html", orders=orders, index=len(orders))
         if request.method == "POST":
             oid = request.form.get("oid")
             session["admin_oid"] = oid
@@ -638,6 +617,7 @@ def admin_orders():
 
 @app.route("/admin/orders/more", methods=["GET", "POST"])
 def admin_orders_more():
+    """訂單詳情"""
     oid = session["admin_oid"]
     if "admin" not in session:
         return redirect(url_for("admin_login"))
@@ -650,23 +630,20 @@ def admin_orders_more():
             pid = request.form.get("pid")
             quantity = request.form.get("quantity")
             price = request.form.get("price")
-            complete_orders(
-                oid=oid, cid=cid, pid=pid, quantity=quantity, price=price
-            )
+            complete_orders(oid=oid, cid=cid, pid=pid, quantity=quantity, price=price)
             session.pop("admin_oid", None)
             return redirect(url_for("admin_orders"))
 
 
 @app.route("/admin/horders", methods=["GET", "POST"])
 def admin_horders():
+    """歷史訂單"""
     if "admin" not in session:
         return redirect(url_for("admin_login"))
     else:
         if request.method == "GET":
             horders = get_table("orders_history")
-            return render_template(
-                "admin_horders.html", horders=horders, index=len(horders)
-            )
+            return render_template("admin_horders.html", horders=horders, index=len(horders))
         if request.method == "POST":
             hid = request.form.get("hid")
             session["admin_hid"] = hid
@@ -675,6 +652,7 @@ def admin_horders():
 
 @app.route("/admin/horders/more", methods=["GET", "POST"])
 def admin_horders_more():
+    """歷史訂單詳情"""
     hid = session["admin_hid"]
     if "admin" not in session:
         return redirect(url_for("admin_login"))
@@ -689,15 +667,13 @@ def admin_horders_more():
 
 @app.route("/admin/product", methods=["GET", "POST"])
 def admin_product():
-    """顯示product"""
+    """顯示商品"""
     if "admin" not in session:
         return redirect(url_for("admin_login"))
     else:
         if request.method == "GET":
             product = get_table("product")
-            return render_template(
-                "admin_product.html", product=product, index=len(product)
-            )
+            return render_template("admin_product.html", product=product, index=len(product))
         if request.method == "POST":
             pid = request.form.get("pid")
             session["admin_pid"] = pid
@@ -706,7 +682,7 @@ def admin_product():
 
 @app.route("/admin/edit/product", methods=["GET", "POST"])
 def admin_edit_product():
-    """顯示編輯product頁面"""
+    """顯示商品管理"""
     pid = session["admin_pid"]
     if "admin" not in session:
         return redirect(url_for("admin_login"))
@@ -724,7 +700,7 @@ def admin_edit_product():
 
 @app.route("/admin/add/product", methods=["GET", "POST"])
 def admin_add_product():
-    """管理者增加商品選項頁面"""
+    """管理員增加商品選項頁面"""
     if "admin" not in session:
         return redirect(url_for("admin_login"))
     else:
@@ -739,14 +715,13 @@ def admin_add_product():
 
 @app.route("/admin/admins", methods=["GET", "POST"])
 def admin_admins():
+    """管理員管理"""
     if "admin" not in session:
         return redirect(url_for("admin_login"))
     else:
         if request.method == "GET":
             admins = get_table("administrator")
-            return render_template(
-                "admin_admins.html", admins=admins, index=len(admins)
-            )
+            return render_template("admin_admins.html", admins=admins, index=len(admins))
         if request.method == "POST":
             aid = request.form.get("aid")
             session["admin_aid"] = aid
@@ -755,7 +730,7 @@ def admin_admins():
 
 @app.route("/admin/edit/admins", methods=["GET", "POST"])
 def admin_edit_admins():
-    """高級管理者編輯管理者"""
+    """管理員編輯管理員"""
     aid = session["admin_aid"]
     if "admin" not in session:
         return redirect(url_for("admin_login"))
@@ -776,7 +751,7 @@ def admin_edit_admins():
 
 @app.route("/admin/add/admins", methods=["GET", "POST"])
 def admin_add_admins():
-    """高級管理者新增管理者"""
+    """管理員新增管理員"""
     if "admin" not in session:
         return redirect(url_for("admin_login"))
     else:
@@ -794,18 +769,20 @@ def admin_add_admins():
 
 @app.route("/admin/admins/same")
 def admin_admins_same():
+    """有相同的管理員名稱"""
     return render_template("admin_admins_same.html")
 
 
 @app.route("/admin/logout")
 def admin_logout():
-    """管理者登出"""
+    """管理員登出"""
     session.pop("admin", None)
     return redirect(url_for("index"))
 
 
 @app.route("/admin/contact")
 def admin_call():
+    """聯絡開發人員"""
     if "admin" not in session:
         return redirect(url_for("admin_login"))
     else:
