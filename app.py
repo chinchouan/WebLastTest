@@ -188,7 +188,7 @@ def update_product(id, describe, price) -> None:
     """更新商品選項"""
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
-    sql = "Update product set describe=?, price=? where id = ?"
+    sql = "Update product set description=?, price=? where id = ?"
     values = (describe, price, id)
     cursor.execute(sql, values)
     conn.commit()
